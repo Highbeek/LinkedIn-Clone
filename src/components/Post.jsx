@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef, useState } from "react";
 import { Avatar } from "@mui/material";
 import InputOption from "./InputOption";
 import "./Post.css";
@@ -7,11 +7,18 @@ import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 
-const Post = ({ name, description, message, photoUrl }) => {
+const Post = forwardRef(({ name, description, message, photoUrl }, ref) => {
+  const [liked, setLiked] = useState(false);
+
+  const handleLikeClick = () => {
+    setLiked(!liked);
+    console.log("Like button clicked");
+  };
+
   return (
-    <div className="post">
+    <div ref={ref} className="post">
       <div className="post__header">
-        <Avatar />
+        <Avatar src={photoUrl}>{name[0]}</Avatar>
         <div className="post__info">
           <h2>{name}</h2>
           <p>{description}</p>
@@ -21,13 +28,19 @@ const Post = ({ name, description, message, photoUrl }) => {
         <p>{message}</p>
       </div>
       <div className="post__buttons">
-        <InputOption Icon={ThumbUpAltOutlinedIcon} title="Like" color="gray" />
-        <InputOption Icon={ChatOutlinedIcon} title="Like" color="gray" />
-        <InputOption Icon={ShareOutlinedIcon} title="Like" color="gray" />
-        <InputOption Icon={SendOutlinedIcon} title="Like" color="gray" />
+        <InputOption
+          Icon={liked ? ThumbUpAltIcon : ThumbUpAltOutlinedIcon}
+          title="Like"
+          color={liked ? "primary" : "gray"}
+          onClick={handleLikeClick}
+        />
+
+        <InputOption Icon={ChatOutlinedIcon} title="Comment" color="gray" />
+        <InputOption Icon={ShareOutlinedIcon} title="Share" color="gray" />
+        <InputOption Icon={SendOutlinedIcon} title="Send" color="gray" />
       </div>
     </div>
   );
-};
+});
 
 export default Post;

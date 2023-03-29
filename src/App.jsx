@@ -8,6 +8,8 @@ import Login from "./components/Login";
 import { login, logout, selectUser } from "./features/userSlice";
 import { auth } from "./components/firebase";
 import { useEffect } from "react";
+import Widgets from "./components/Widgets";
+import DarkModeToggle from "./components/DarkModeToggle";
 
 function App() {
   const user = useSelector(selectUser);
@@ -35,15 +37,14 @@ function App() {
     <div className="app">
       {/* Header */}
       <Header />
-
+      
       {!user ? (
         <Login />
       ) : (
         <div className="app__body">
           <Sidebar />
           <Feed />
-          {/* App Body */}
-          {/* Widgets */}
+          <Widgets />
         </div>
       )}
     </div>
